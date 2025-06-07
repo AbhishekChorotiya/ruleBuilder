@@ -27,11 +27,11 @@ Centralized state management system for the rule builder application using React
       conditions: [            // Array of conditions in group
         {
           id: 1,               // Unique condition identifier
-          paymentCriteria: "payment_method", // Selected payment criteria key
-          criteriaValue: "",                 // Selected value for enum types
-          comparisonOperator: "",            // Comparison operator (equals, greater than, etc.)
-          metadataKey: "",                   // Custom key input for metadata
-          metadataValue: ""                  // Custom value input for metadata
+          paymentCriteria: allKeys[0], // Selected payment criteria key (defaults to first key)
+          criteriaValue: "",           // Selected value for enum types
+          comparisonOperator: "",      // Comparison operator (equals, greater than, etc.)
+          metadataKey: "",             // Custom key input for metadata
+          metadataValue: ""            // Custom value input for metadata
         }
       ]
     }
@@ -46,6 +46,15 @@ Centralized state management system for the rule builder application using React
   }
 }
 ```
+
+### Initial State Configuration
+
+The initial state starts with a single group containing one condition:
+
+- **Single Group**: ID 1 with "AND" operator
+- **Single Condition**: ID 1 with default `paymentCriteria` set to `allKeys[0]`
+- **Clean Start**: All other fields empty for user input
+- **Minimal Setup**: Provides the simplest starting point for rule creation
 
 ## State Management Functions
 
