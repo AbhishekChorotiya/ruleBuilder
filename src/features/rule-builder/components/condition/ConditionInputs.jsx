@@ -8,9 +8,10 @@ export const ConditionInputs = ({
   valuesForSelectedKey,
   handleKeyChange,
   condition,
+  selectedKeyType, // Add selectedKeyType prop
 }) => {
   return (
-    <div className="condition-inputs">
+    <div className="flex h-full w-full flex-wrap items-center gap-4 rounded-lg bg-gray-100 px-4 py-2">
       {inputSequenceValue.map((inputType, index) => (
         <InputRenderer
           key={index}
@@ -21,6 +22,7 @@ export const ConditionInputs = ({
           valuesForSelectedKey={valuesForSelectedKey}
           handleKeyChange={handleKeyChange}
           condition={condition}
+          selectedKeyType={selectedKeyType} // Pass selectedKeyType to InputRenderer
         />
       ))}
     </div>

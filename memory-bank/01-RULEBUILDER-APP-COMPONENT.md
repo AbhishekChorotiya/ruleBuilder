@@ -19,7 +19,6 @@ Main rule builder application component that serves as the root container for th
 - `react-icons/io5`: IoAdd icon for add buttons
 - `./Group`: Group component for rendering individual rule groups
 - `../context/RuleBuilderContext`: Context hook for state management
-- `../styles/RuleBuilder.css`: Feature-specific styles
 
 ## State Integration
 
@@ -70,28 +69,29 @@ Uses `useRuleBuilderContext` to access:
 ## UI/UX Features
 
 - **Modern Icons**: React Icons integration for consistent iconography
-- **Responsive Design**: CSS Grid and Flexbox for adaptive layouts
+- **Responsive Design**: Tailwind utilities for adaptive layouts
 - **Visual Hierarchy**: Clear separation between sections with proper spacing
 - **Interactive Elements**: Hover states, focus states, and visual feedback
 - **Accessibility**: Semantic HTML, proper labels, and keyboard navigation
-- **Custom CSS**: Feature-specific styling with BEM methodology
+- **Utility-First Styling**: TailwindCSS for maintainable and consistent styling
 
 ## Styling Architecture
 
-Uses custom CSS with BEM (Block Element Modifier) methodology:
+Uses TailwindCSS utility classes for styling:
 
-- **Block**: `.rule-builder` - Main component container
-- **Elements**: `.rule-builder__header`, `.rule-builder__content`, etc.
-- **Modifiers**: Hover states, focus states, and interactive variations
+- **Layout**: Flexbox and grid utilities for responsive design
+- **Colors**: Consistent color palette using Tailwind color classes
+- **Spacing**: Standardized padding and margin using Tailwind spacing scale
+- **Interactive States**: Hover, focus, and transition utilities
 
-### Key CSS Classes
+### Key Tailwind Classes
 
-- `.rule-builder`: Main container with flexbox layout
-- `.rule-builder__header`: Header section with blue background
-- `.rule-builder__groups`: Groups container with gap spacing
-- `.rule-builder__add-group-btn`: Add group button with dashed border
-- `.rule-builder__auth-section`: Authentication section styling
-- `.rule-builder__save-btn`: Save button with blue theme
+- **Container**: `flex h-screen w-full flex-col` - Main layout structure
+- **Header**: `flex justify-center bg-blue-100 p-4` - Header styling
+- **Groups**: `flex flex-col gap-4` - Groups container layout
+- **Buttons**: `rounded-lg bg-blue-500 hover:bg-blue-600` - Interactive elements
+- **Form Elements**: `rounded border border-gray-300 focus:border-blue-500` - Input styling
+- **Badges**: `rounded-lg bg-orange-200 text-orange-800` - Status indicators
 
 ## Data Flow
 
@@ -135,7 +135,7 @@ Uses custom CSS with BEM (Block Element Modifier) methodology:
 - **Efficient Rendering**: Uses React keys for group mapping
 - **State Optimization**: Minimal re-renders through context design
 - **Event Delegation**: Proper event handler binding
-- **CSS Optimization**: Custom CSS instead of runtime utility classes
+- **Styling Optimization**: TailwindCSS utility classes for optimal performance
 
 ## Error Handling
 
@@ -180,6 +180,6 @@ Uses custom CSS with BEM (Block Element Modifier) methodology:
 
 - **Feature-based Architecture**: Self-contained within rule-builder feature
 - **Component Composition**: Modular design with clear responsibilities
-- **Custom CSS**: Maintainable styling with BEM methodology
+- **Utility-First CSS**: TailwindCSS for maintainable and consistent styling
 - **React Icons**: Consistent iconography throughout the application
 - **Semantic HTML**: Proper document structure and accessibility

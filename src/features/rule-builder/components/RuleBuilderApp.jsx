@@ -1,22 +1,21 @@
 import { IoAdd } from "react-icons/io5";
 import { Group } from "./Group";
 import { useRuleBuilderContext } from "../context/RuleBuilderContext";
-import "../styles/RuleBuilder.css";
 
 function RuleBuilderApp() {
   const { ruleState, addGroup, removeGroup, updateAuthType, saveRule } =
     useRuleBuilderContext();
 
   return (
-    <div className="rule-builder">
-      <header className="rule-builder__header">
-        <h1 className="rule-builder__title">Rule Builder</h1>
+    <div className="flex h-screen w-full flex-col">
+      <header className="flex justify-center bg-blue-100 p-4">
+        <h1 className="text-lg font-semibold text-blue-800">Rule Builder</h1>
       </header>
 
-      <main className="rule-builder__content">
-        <div className="rule-builder__groups">
+      <main className="flex h-full w-full flex-col p-4">
+        <div className="flex flex-col gap-4">
           {ruleState.groups.map((group, index) => (
-            <div key={group.id} className="rule-builder__group-container">
+            <div key={group.id} className="w-full">
               <Group
                 groupId={group.id}
                 groupNumber={index + 1}
@@ -24,40 +23,40 @@ function RuleBuilderApp() {
                 showRemoveButton={ruleState.groups.length > 1}
               />
               {index < ruleState.groups.length - 1 && (
-                <div className="rule-builder__group-operator">
-                  <span className="rule-builder__operator-badge">
-                    {ruleState.groupOperator}
+                <div className="flex w-full justify-center py-5">
+                  <span className="flex w-fit items-center rounded-lg bg-orange-200 px-4 py-2 font-semibold text-orange-800">
+                    {ruleState.betweenGroupsOperator}
                   </span>
                 </div>
               )}
             </div>
           ))}
 
-          <div className="rule-builder__add-group">
+          <div className="mt-5 flex w-full items-center justify-center">
             <button
               onClick={addGroup}
-              className="rule-builder__add-group-btn"
+              className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-orange-800 bg-transparent px-4 py-3 text-orange-800 transition-colors hover:bg-orange-50"
               type="button"
             >
-              <IoAdd className="rule-builder__add-icon" />
+              <IoAdd className="h-5 w-5" />
               Add Group (Joined by OR)
             </button>
           </div>
         </div>
 
-        <div className="rule-builder__then-section">
-          <p className="rule-builder__then-text">then...</p>
+        <div className="py-5">
+          <p className="font-medium text-gray-600">then...</p>
         </div>
 
-        <div className="rule-builder__auth-section">
-          <label htmlFor="auth-type" className="rule-builder__auth-label">
+        <div className="flex items-center gap-5 rounded-lg bg-gray-100 p-5">
+          <label htmlFor="auth-type" className="font-medium text-gray-700">
             Auth Type is equal to
           </label>
-          <div className="rule-builder__auth-select-wrapper">
+          <div className="rounded-lg bg-white p-2 shadow-sm">
             <select
               id="auth-type"
-              className="rule-builder__auth-select"
-              value={ruleState.authType}
+              className="rounded-lg border-none bg-transparent outline-none focus:ring-2 focus:ring-blue-500"
+              value={ruleState.authenticationRequirement}
               onChange={(e) => updateAuthType(e.target.value)}
             >
               <option value="any">Any</option>
@@ -67,10 +66,10 @@ function RuleBuilderApp() {
           </div>
         </div>
 
-        <div className="rule-builder__actions">
+        <div className="py-5">
           <button
             onClick={saveRule}
-            className="rule-builder__save-btn"
+            className="mt-5 rounded-lg bg-blue-500 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
             type="button"
           >
             Save Rule

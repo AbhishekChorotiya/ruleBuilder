@@ -13,11 +13,11 @@ export const useRuleBuilderState = () => {
         conditions: [
           {
             id: 1,
-            selectedKey: allKeys[0],
-            selectedValue: "",
-            selectedOperator: "",
-            keyInput: "",
-            valueInput: "",
+            paymentCriteria: allKeys[0],
+            criteriaValue: "",
+            comparisonOperator: "",
+            metadataKey: "",
+            metadataValue: "",
           },
         ],
       },
@@ -27,17 +27,17 @@ export const useRuleBuilderState = () => {
         conditions: [
           {
             id: 1,
-            selectedKey: allKeys[0],
-            selectedValue: "",
-            selectedOperator: "",
-            keyInput: "",
-            valueInput: "",
+            paymentCriteria: allKeys[0],
+            criteriaValue: "",
+            comparisonOperator: "",
+            metadataKey: "",
+            metadataValue: "",
           },
         ],
       },
     ],
-    groupOperator: "OR", // OR between groups
-    authType: "any",
+    betweenGroupsOperator: "OR", // OR between groups
+    authenticationRequirement: "any",
     isActive: true,
     metadata: {
       createdAt: new Date().toISOString(),
@@ -55,11 +55,11 @@ export const useRuleBuilderState = () => {
       conditions: [
         {
           id: 1,
-          selectedKey: allKeys[0],
-          selectedValue: "",
-          selectedOperator: "",
-          keyInput: "",
-          valueInput: "",
+          paymentCriteria: allKeys[0],
+          criteriaValue: "",
+          comparisonOperator: "",
+          metadataKey: "",
+          metadataValue: "",
         },
       ],
     };
@@ -110,11 +110,11 @@ export const useRuleBuilderState = () => {
             Math.max(...group.conditions.map((c) => c.id)) + 1;
           const newCondition = {
             id: newConditionId,
-            selectedKey: allKeys[0],
-            selectedValue: "",
-            selectedOperator: "",
-            keyInput: "",
-            valueInput: "",
+            paymentCriteria: allKeys[0],
+            criteriaValue: "",
+            comparisonOperator: "",
+            metadataKey: "",
+            metadataValue: "",
           };
           return {
             ...group,
@@ -161,11 +161,11 @@ export const useRuleBuilderState = () => {
                 const updatedCondition = { ...condition, [field]: value };
 
                 // Reset dependent fields when key changes
-                if (field === "selectedKey") {
-                  updatedCondition.selectedOperator = "";
-                  updatedCondition.selectedValue = "";
-                  updatedCondition.keyInput = "";
-                  updatedCondition.valueInput = "";
+                if (field === "paymentCriteria") {
+                  updatedCondition.comparisonOperator = "";
+                  updatedCondition.criteriaValue = "";
+                  updatedCondition.metadataKey = "";
+                  updatedCondition.metadataValue = "";
                 }
 
                 return updatedCondition;
@@ -187,7 +187,7 @@ export const useRuleBuilderState = () => {
   const updateAuthType = (authType) => {
     setRuleState((prev) => ({
       ...prev,
-      authType,
+      authenticationRequirement: authType,
       metadata: {
         ...prev.metadata,
         updatedAt: new Date().toISOString(),

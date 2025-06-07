@@ -211,9 +211,11 @@ Contains three specialized select components:
 
 - **Layout**: `flex`, `items-center`, `gap-4`, `min-h-16`
 - **Spacing**: `p-2`, `px-4`, `py-2`, `px-3`
-- **Colors**: `bg-orange-100`, `text-orange-800`, `bg-red-500`
+- **Colors**: `bg-orange-200`, `text-orange-800`, `bg-red-500`
 - **Interactive**: `hover:bg-red-600`, `rounded-lg`
 - **Typography**: `font-semibold`
+- **Form Elements**: `rounded border border-gray-300 focus:border-blue-500`
+- **Input Containers**: `bg-gray-100`, `bg-white`, `shadow-sm`
 
 ### Visual Hierarchy
 

@@ -14,6 +14,7 @@ export const InputRenderer = ({
   valuesForSelectedKey,
   handleKeyChange,
   condition,
+  selectedKeyType, // Add selectedKeyType prop
 }) => {
   const inputComponents = {
     "key-item": (
@@ -43,6 +44,7 @@ export const InputRenderer = ({
         placeholder="Enter value"
         handleKeyChange={handleKeyChange}
         condition={condition}
+        inputType={selectedKeyType} // Pass selectedKeyType as inputType prop
       />
     ),
     "key-input": (
@@ -51,6 +53,7 @@ export const InputRenderer = ({
         placeholder="Enter key"
         handleKeyChange={handleKeyChange}
         condition={condition}
+        inputType={selectedKeyType} // Pass selectedKeyType as inputType prop
       />
     ),
   };

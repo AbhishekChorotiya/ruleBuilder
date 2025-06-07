@@ -34,17 +34,17 @@ A React-based rule builder application that allows users to create complex condi
       "conditions": [
         {
           "id": 1,
-          "selectedKey": "payment_method",
-          "selectedValue": "",
-          "selectedOperator": "",
-          "keyInput": "",
-          "valueInput": ""
+          "paymentCriteria": "payment_method",
+          "criteriaValue": "",
+          "comparisonOperator": "",
+          "metadataKey": "",
+          "metadataValue": ""
         }
       ]
     }
   ],
-  "groupOperator": "OR",
-  "authType": "any",
+  "betweenGroupsOperator": "OR",
+  "authenticationRequirement": "any",
   "isActive": true,
   "metadata": {
     "createdAt": "2025-06-07T01:21:20.664Z",
@@ -61,7 +61,7 @@ A React-based rule builder application that allows users to create complex condi
 - **Flexible Operators**: Different operator types based on data types
 - **Real-time Updates**: Automatic timestamp tracking
 - **Validation**: Type-safe condition building
-- **Modern UI**: React Icons with custom CSS styling
+- **Modern UI**: React Icons with Tailwind CSS styling
 - **Feature-based Architecture**: Organized by business features
 
 ## File Structure Overview
@@ -89,10 +89,8 @@ src/
 │       │       └── SpecializedSelects.jsx # Specialized selects
 │       ├── context/
 │       │   └── RuleBuilderContext.jsx # React Context provider
-│       ├── hooks/
-│       │   └── useRuleBuilderState.js # Centralized state management
-│       └── styles/
-│           └── RuleBuilder.css        # Feature-specific styles
+│       └── hooks/
+│           └── useRuleBuilderState.js # Centralized state management
 └── utils/
     └── constants.js                   # Payment-related constants
 ```

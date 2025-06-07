@@ -27,17 +27,17 @@ Centralized state management system for the rule builder application using React
       conditions: [            // Array of conditions in group
         {
           id: 1,               // Unique condition identifier
-          selectedKey: "payment_method",     // Selected criteria key
-          selectedValue: "",                 // Selected value for enum types
-          selectedOperator: "",              // Comparison operator
-          keyInput: "",                      // Custom key input for metadata
-          valueInput: ""                     // Custom value input
+          paymentCriteria: "payment_method", // Selected payment criteria key
+          criteriaValue: "",                 // Selected value for enum types
+          comparisonOperator: "",            // Comparison operator (equals, greater than, etc.)
+          metadataKey: "",                   // Custom key input for metadata
+          metadataValue: ""                  // Custom value input for metadata
         }
       ]
     }
   ],
-  groupOperator: "OR",         // Operator between groups
-  authType: "any",             // Authentication requirement
+  betweenGroupsOperator: "OR", // Operator between groups (OR/AND)
+  authenticationRequirement: "any", // Authentication requirement (any/all/none)
   isActive: true,              // Rule active status
   metadata: {                  // Rule metadata
     createdAt: "ISO_DATE",     // Creation timestamp
@@ -86,12 +86,12 @@ Centralized state management system for the rule builder application using React
 
 ### Automatic Field Reset
 
-When `selectedKey` changes in a condition:
+When `paymentCriteria` changes in a condition:
 
-- `selectedOperator` resets to ""
-- `selectedValue` resets to ""
-- `keyInput` resets to ""
-- `valueInput` resets to ""
+- `comparisonOperator` resets to ""
+- `criteriaValue` resets to ""
+- `metadataKey` resets to ""
+- `metadataValue` resets to ""
 
 ### ID Management
 

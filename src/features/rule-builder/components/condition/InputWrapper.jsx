@@ -1,4 +1,4 @@
 // Base input wrapper component
 export const InputWrapper = ({ children }) => {
-  return <div className="input-wrapper">{children}</div>;
+  return <div className="rounded bg-white p-2 shadow-sm">{children}</div>;
 };

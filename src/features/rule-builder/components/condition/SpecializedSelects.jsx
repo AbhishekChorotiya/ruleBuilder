@@ -3,8 +3,8 @@ export const SelectKeyItem = ({ allKeys, handleKeyChange, condition }) => {
   return (
     <select
       name="key-item"
-      className="select-input"
-      value={condition.selectedKey}
+      className="rounded border border-gray-300 bg-white px-3 py-2 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+      value={condition.paymentCriteria}
       onChange={handleKeyChange}
     >
       {allKeys.map((key) => (
@@ -20,8 +20,8 @@ export const SelectOperator = ({ operators, handleKeyChange, condition }) => {
   return (
     <select
       name="operator"
-      className="select-input"
-      value={condition.selectedOperator}
+      className="rounded border border-gray-300 bg-white px-3 py-2 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+      value={condition.comparisonOperator}
       onChange={handleKeyChange}
     >
       <option value="">Select operator...</option>
@@ -42,8 +42,8 @@ export const SelectValue = ({
   return (
     <select
       name="select-value"
-      className="select-input"
-      value={condition.selectedValue}
+      className="rounded border border-gray-300 bg-white px-3 py-2 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+      value={condition.criteriaValue}
       onChange={handleKeyChange}
     >
       <option value="">Select value...</option>

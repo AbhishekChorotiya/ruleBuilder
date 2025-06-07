@@ -15,11 +15,11 @@ export const Condition = ({ groupId }) => {
   const conditions = getGroupConditions(groupId);
 
   const getConditionData = (condition) => {
-    const selectedKeyType = allKeyTypes[condition.selectedKey];
+    const selectedKeyType = allKeyTypes[condition.paymentCriteria];
     const operators = allOperators[selectedKeyType] || [];
     const valuesForSelectedKey =
       selectedKeyType === "enum_variant"
-        ? allVariantValues[condition.selectedKey]
+        ? allVariantValues[condition.paymentCriteria]
         : [];
     const inputSequenceValue = inputSequence[selectedKeyType] || [];
 
@@ -44,11 +44,15 @@ export const Condition = ({ groupId }) => {
   };
 
   return (
-    <div className="condition">
-      <div className="condition__list">
+    <div className="flex w-full flex-col gap-4">
+      <div className="flex flex-col gap-4">
         {conditions.map((condition, index) => {
-          const { operators, valuesForSelectedKey, inputSequenceValue } =
-            getConditionData(condition);
+          const {
+            selectedKeyType,
+            operators,
+            valuesForSelectedKey,
+            inputSequenceValue,
+          } = getConditionData(condition);
 
           return (
             <ConditionRow
@@ -61,18 +65,19 @@ export const Condition = ({ groupId }) => {
               operators={operators}
               valuesForSelectedKey={valuesForSelectedKey}
               inputSequenceValue={inputSequenceValue}
+              selectedKeyType={selectedKeyType}
             />
           );
         })}
       </div>
 
-      <div className="condition__add">
+      <div className="mt-4 flex w-full justify-start">
         <button
           onClick={handleAddCondition}
-          className="condition__add-btn"
+          className="flex items-center gap-2 rounded-lg bg-transparent px-4 py-2 text-blue-500 transition-colors hover:bg-blue-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
           type="button"
         >
-          <IoAdd className="condition__add-icon" />
+          <IoAdd className="h-4 w-4" />
           Add Condition
         </button>
       </div>
