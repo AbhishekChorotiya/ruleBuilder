@@ -61,24 +61,40 @@ A React-based rule builder application that allows users to create complex condi
 - **Flexible Operators**: Different operator types based on data types
 - **Real-time Updates**: Automatic timestamp tracking
 - **Validation**: Type-safe condition building
-- **Responsive UI**: TailwindCSS-based responsive design
+- **Modern UI**: React Icons with custom CSS styling
+- **Feature-based Architecture**: Organized by business features
 
 ## File Structure Overview
 
 ```
 src/
-├── App.jsx                    # Main application component
-├── main.jsx                   # React entry point
-├── components/
-│   ├── Group.jsx              # Group container component
-│   ├── Condition.jsx          # Condition management component
-│   └── condition/             # Specialized condition components
-├── context/
-│   └── RuleBuilderContext.jsx # React Context provider
-├── hooks/
-│   └── useRuleBuilderState.js # Centralized state management
+├── App.jsx                           # Main application entry point
+├── main.jsx                          # React entry point
+├── features/
+│   └── rule-builder/                 # Rule Builder feature module
+│       ├── index.js                  # Feature barrel exports
+│       ├── components/
+│       │   ├── RuleBuilderApp.jsx    # Main rule builder component
+│       │   ├── Group.jsx             # Group container component
+│       │   ├── Condition.jsx         # Condition management component
+│       │   └── condition/            # Specialized condition components
+│       │       ├── index.js          # Condition components barrel
+│       │       ├── ConditionRow.jsx  # Individual condition row
+│       │       ├── ConditionLabel.jsx # WHERE/AND labels
+│       │       ├── ConditionInputs.jsx # Input container
+│       │       ├── InputRenderer.jsx  # Input factory
+│       │       ├── InputWrapper.jsx   # Input wrapper
+│       │       ├── TextInput.jsx      # Text input component
+│       │       ├── SelectInput.jsx    # Select input component
+│       │       └── SpecializedSelects.jsx # Specialized selects
+│       ├── context/
+│       │   └── RuleBuilderContext.jsx # React Context provider
+│       ├── hooks/
+│       │   └── useRuleBuilderState.js # Centralized state management
+│       └── styles/
+│           └── RuleBuilder.css        # Feature-specific styles
 └── utils/
-    └── constants.js           # Payment-related constants and configurations
+    └── constants.js                   # Payment-related constants
 ```
 
 ## Data Flow

@@ -1,6 +1,6 @@
 # Condition Sub-Components Context
 
-## Directory: `src/components/condition/`
+## Directory: `src/features/rule-builder/components/condition/`
 
 ## Purpose
 

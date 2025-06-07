@@ -4,30 +4,44 @@
 
 ## Purpose
 
-Main application component that serves as the root container for the rule builder interface. Orchestrates the overall layout and provides the primary user interface for rule management.
+Main application entry point that serves as a thin wrapper around the Rule Builder feature. Follows the feature-based architecture pattern by delegating all functionality to the RuleBuilderApp component.
 
 ## Key Responsibilities
 
-1. **Layout Management**: Provides the main application structure and styling
-2. **Group Orchestration**: Renders and manages multiple rule groups
-3. **Global Actions**: Handles rule-level operations (save, auth type)
-4. **Visual Hierarchy**: Displays group operators and relationships
+1. **Feature Delegation**: Renders the RuleBuilderApp component from the rule-builder feature
+2. **Clean Architecture**: Maintains separation between app shell and feature logic
+3. **Single Responsibility**: Acts as the application entry point only
 
 ## Dependencies
 
-- `./components/Group`: Group component for rendering individual rule groups
-- `./context/RuleBuilderContext`: Context hook for state management
-- `./App.css`: Component-specific styles
+- `./features/rule-builder`: Rule Builder feature module
 
-## State Integration
+## Architecture Pattern
 
-Uses `useRuleBuilderContext` to access:
+The App component follows the **Feature Shell Pattern**:
 
-- `ruleState`: Complete rule configuration
-- `addGroup()`: Function to add new groups
-- `removeGroup(groupId)`: Function to remove groups
-- `updateAuthType(authType)`: Function to update authentication type
-- `saveRule()`: Function to save and log the complete rule
+- Minimal logic in the main App component
+- All business logic contained within feature modules
+- Clean separation of concerns
+- Easy feature addition/removal
+
+## Code Structure
+
+```jsx
+import { RuleBuilderApp } from "./features/rule-builder";
+
+function App() {
+  return <RuleBuilderApp />;
+}
+
+export default App;
+```
+
+## Integration Points
+
+- **Feature Module**: Imports and renders RuleBuilderApp
+- **Provider Setup**: Context providers are set up in main.jsx
+- **Routing**: Currently single-feature app, but ready for routing addition
 
 ## Component Structure
 

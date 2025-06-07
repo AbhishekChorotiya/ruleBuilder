@@ -18,13 +18,22 @@ This memory bank contains comprehensive context files for AI systems to understa
 
 ### 🏠 [01-APP-COMPONENT.md](./01-APP-COMPONENT.md)
 
-**Main application component context**
+**Main application entry point context**
 
-- App.jsx component responsibilities
+- App.jsx component responsibilities (feature shell pattern)
+- Clean architecture and feature delegation
+- Integration with feature modules
+- **Use when**: Understanding the application entry point or adding new features
+
+### 🎯 [01-RULEBUILDER-APP-COMPONENT.md](./01-RULEBUILDER-APP-COMPONENT.md)
+
+**Main rule builder application component**
+
+- RuleBuilderApp.jsx component responsibilities
 - Layout management and UI structure
 - Integration with state management
-- Event handling and user interactions
-- **Use when**: Modifying the main application layout or adding global features
+- React Icons integration and modern UI
+- **Use when**: Modifying the main rule builder interface or adding global features
 
 ### 🔄 [02-STATE-MANAGEMENT.md](./02-STATE-MANAGEMENT.md)
 

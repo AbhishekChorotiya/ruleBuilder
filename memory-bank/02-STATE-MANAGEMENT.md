@@ -1,6 +1,6 @@
 # State Management Context
 
-## Files: `src/hooks/useRuleBuilderState.js` & `src/context/RuleBuilderContext.jsx`
+## Files: `src/features/rule-builder/hooks/useRuleBuilderState.js` & `src/features/rule-builder/context/RuleBuilderContext.jsx`
 
 ## Purpose
 

@@ -1,6 +1,6 @@
 # Condition Component Context
 
-## File: `src/components/Condition.jsx`
+## File: `src/features/rule-builder/components/Condition.jsx`
 
 ## Purpose
 

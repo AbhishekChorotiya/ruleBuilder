@@ -1,6 +1,6 @@
 # Group Component Context
 
-## File: `src/components/Group.jsx`
+## File: `src/features/rule-builder/components/Group.jsx`
 
 ## Purpose
 
