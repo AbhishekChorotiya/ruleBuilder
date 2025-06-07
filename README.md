@@ -17,7 +17,7 @@ A React-based rule builder application for creating complex conditional rules fo
 - **Build Tool**: Vite 6.3.5
 - **Styling**: TailwindCSS 4.1.8
 - **Icons**: React Icons 5.5.0
-- **State Management**: React Context + Custom Hooks
+- **State Management**: Simplified component state with React hooks
 - **Code Quality**: ESLint + Prettier
 
 ## 📦 Installation
@@ -112,8 +112,8 @@ RuleBuilderApp
 
 ### State Management
 
-- **Context**: `RuleBuilderContext` provides global state access
-- **Hook**: `useRuleBuilderState` manages centralized state logic
+- **Component State**: Local state management using React's useState
+- **Props Drilling**: State passed down through component hierarchy
 - **Immutability**: All state updates create new objects
 - **Real-time**: Automatic metadata updates on changes
 
@@ -127,10 +127,18 @@ src/
 │   │   ├── Group.jsx              # Group container
 │   │   ├── Condition.jsx          # Condition manager
 │   │   └── condition/             # Condition sub-components
-│   ├── context/                   # React Context
-│   ├── hooks/                     # Custom hooks
-│   └── styles/                    # Feature styles
+│   │       ├── ConditionRow.jsx   # Individual condition row
+│   │       ├── ConditionInputs.jsx # Input container
+│   │       ├── InputRenderer.jsx  # Dynamic input renderer
+│   │       ├── SelectInput.jsx    # Select dropdown
+│   │       ├── TextInput.jsx      # Text input field
+│   │       ├── SpecializedSelects.jsx # Specialized selects
+│   │       ├── ConditionLabel.jsx # Condition labels
+│   │       ├── InputWrapper.jsx   # Input wrapper
+│   │       └── index.js           # Barrel exports
+│   └── index.js                   # Feature exports
 ├── utils/                         # Shared utilities
+│   └── constants.js               # Application constants
 └── App.jsx                        # Application entry
 ```
 
@@ -176,9 +184,10 @@ The application includes extensive payment-related constants:
 To extend the rule builder:
 
 1. Add new condition types in `utils/constants.js`
-2. Create specialized input components in `condition/`
-3. Update the state structure in `useRuleBuilderState.js`
+2. Create specialized input components in `src/features/rule-builder/components/condition/`
+3. Update the state structure in `RuleBuilderApp.jsx`
 4. Add corresponding operators and validation logic
+5. Export new components through the barrel files (`index.js`)
 
 ## 📝 License
 
@@ -197,7 +206,21 @@ This is a private project. For internal contributions:
 
 Additional documentation is available in the `memory-bank/` directory:
 
-- Project overview and architecture
-- Component-specific documentation
-- State management patterns
-- AI integration guidelines
+- **00-PROJECT-OVERVIEW.md**: Complete project overview and architecture
+- **01-RULEBUILDER-APP-COMPONENT.md**: Main application component documentation
+- **04-GROUP-COMPONENT.md**: Group component structure and functionality
+- **05-CONDITION-COMPONENT.md**: Condition component architecture
+- **06-CONDITION-SUBCOMPONENTS.md**: Detailed condition sub-component docs
+- **08-REACT-FINAL-FORM-REFACTOR.md**: React Final Form integration guide
+- **09-CURRENT-ARCHITECTURE-STATUS.md**: Current architecture status and decisions
+- **README.md**: Memory bank overview and navigation guide
+
+## 🔄 Recent Changes
+
+### Architecture Refactor (Latest)
+
+- **Simplified State Management**: Removed React Context in favor of component-level state
+- **Feature-Based Organization**: Moved all components to `src/features/rule-builder/`
+- **Improved Modularity**: Better separation of concerns with dedicated condition sub-components
+- **Documentation Updates**: Comprehensive documentation in memory-bank
+- **Cleaner Dependencies**: Removed unused context and hook files
