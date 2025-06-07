@@ -16,19 +16,19 @@ Main rule builder application component that serves as the root container for th
 
 ## Dependencies
 
+- `react-final-form`: Form component for form state management
 - `react-icons/io5`: IoAdd icon for add buttons
 - `./Group`: Group component for rendering individual rule groups
-- `../context/RuleBuilderContext`: Context hook for state management
+- `../../../utils/constants`: allKeys constant for default values
 
 ## State Integration
 
-Uses `useRuleBuilderContext` to access:
+Uses React Final Form's render prop pattern with:
 
-- `ruleState`: Complete rule configuration
-- `addGroup()`: Function to add new groups
-- `removeGroup(groupId)`: Function to remove groups
-- `updateAuthType(authType)`: Function to update authentication type
-- `saveRule()`: Function to save and log the complete rule
+- `form`: Form instance for programmatic form manipulation
+- `values`: Current form state values
+- `handleSubmit`: Form submission handler
+- `form.change()`: Method to update form values programmatically
 
 ## Component Structure
 
@@ -95,24 +95,24 @@ Uses TailwindCSS utility classes for styling:
 
 ## Data Flow
 
-1. **Initialization**: Receives state from RuleBuilderContext
-2. **Group Management**: Passes group data to Group components
-3. **User Actions**: Handles button clicks and form changes
-4. **State Updates**: Triggers context methods for state changes
-5. **Visual Updates**: Re-renders based on state changes
+1. **Initialization**: Form initialized with `initialValues` structure
+2. **Group Management**: Passes form instance and values to Group components
+3. **User Actions**: Handles button clicks and form changes via `form.change()`
+4. **State Updates**: Form state updates trigger automatic re-renders
+5. **Visual Updates**: Components re-render based on form values changes
 
 ## Integration Points
 
 ### Child Components
 
-- **Group Component**: Passes `groupId`, `groupNumber`, `onRemove`, `showRemoveButton`
-- **Context Methods**: Direct integration with state management functions
-- **Event Handling**: onClick and onChange handlers for user interactions
+- **Group Component**: Passes `groupId`, `groupIndex`, `groupNumber`, `onRemove`, `showRemoveButton`, `form`, `values`
+- **Form Methods**: Direct integration with React Final Form methods
+- **Event Handling**: onClick handlers that use `form.change()` for state updates
 
 ### Parent Integration
 
 - **App.jsx**: Imported and rendered as the main feature component
-- **Provider**: Wrapped by RuleBuilderProvider in main.jsx
+- **No Provider**: React Final Form manages state internally, no external provider needed
 - **Feature Module**: Exported through feature barrel (index.js)
 
 ## Business Logic

@@ -1,7 +1,15 @@
 import { IoClose } from "react-icons/io5";
 import { Condition } from "./Condition";
 
-export const Group = ({ groupId, groupNumber, onRemove, showRemoveButton }) => {
+export const Group = ({
+  groupId,
+  groupIndex,
+  groupNumber,
+  onRemove,
+  showRemoveButton,
+  form,
+  values,
+}) => {
   const handleRemove = () => {
     onRemove(groupId);
   };
@@ -23,7 +31,12 @@ export const Group = ({ groupId, groupNumber, onRemove, showRemoveButton }) => {
       </div>
 
       <div className="p-5">
-        <Condition groupId={groupId} />
+        <Condition
+          groupId={groupId}
+          groupIndex={groupIndex}
+          form={form}
+          values={values}
+        />
       </div>
     </div>
   );

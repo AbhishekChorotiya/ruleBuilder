@@ -12,48 +12,48 @@ export const InputRenderer = ({
   allKeys,
   operators,
   valuesForSelectedKey,
-  handleKeyChange,
-  condition,
-  selectedKeyType, // Add selectedKeyType prop
+  groupIndex,
+  conditionIndex,
+  selectedKeyType,
 }) => {
+  // Generate proper field names using array indices for React Final Form
+  const getFieldName = (field) => {
+    return `groups[${groupIndex}].conditions[${conditionIndex}].${field}`;
+  };
+
   const inputComponents = {
     "key-item": (
       <SelectKeyItem
         allKeys={allKeys}
-        handleKeyChange={handleKeyChange}
-        condition={condition}
+        fieldName={getFieldName("paymentCriteria")}
       />
     ),
     operator: (
       <SelectOperator
         operators={operators}
-        handleKeyChange={handleKeyChange}
-        condition={condition}
+        fieldName={getFieldName("comparisonOperator")}
       />
     ),
     "select-value": (
       <SelectValue
         valuesForSelectedKey={valuesForSelectedKey}
-        handleKeyChange={handleKeyChange}
-        condition={condition}
+        fieldName={getFieldName("criteriaValue")}
       />
     ),
     "value-input": (
       <TextInput
-        name="value-input"
+        fieldName={
+          selectedKeyType === "metadata_value"
+            ? getFieldName("metadataValue")
+            : getFieldName("criteriaValue")
+        }
         placeholder="Enter value"
-        handleKeyChange={handleKeyChange}
-        condition={condition}
-        inputType={selectedKeyType} // Pass selectedKeyType as inputType prop
       />
     ),
     "key-input": (
       <TextInput
-        name="key-input"
+        fieldName={getFieldName("metadataKey")}
         placeholder="Enter key"
-        handleKeyChange={handleKeyChange}
-        condition={condition}
-        inputType={selectedKeyType} // Pass selectedKeyType as inputType prop
       />
     ),
   };

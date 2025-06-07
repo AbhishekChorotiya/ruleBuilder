@@ -8,7 +8,8 @@ A React-based rule builder application that allows users to create complex condi
 
 - **Frontend**: React 19.1.0 with Vite 6.3.5
 - **Styling**: TailwindCSS 4.1.8
-- **State Management**: React Context + Custom Hooks
+- **State Management**: React Final Form 7.0.0 + Final Form 5.0.0
+- **Icons**: React Icons 5.5.0
 - **Development**: ESLint, Prettier
 - **Build Tool**: Vite
 
@@ -73,34 +74,31 @@ src/
 ├── features/
 │   └── rule-builder/                 # Rule Builder feature module
 │       ├── index.js                  # Feature barrel exports
-│       ├── components/
-│       │   ├── RuleBuilderApp.jsx    # Main rule builder component
-│       │   ├── Group.jsx             # Group container component
-│       │   ├── Condition.jsx         # Condition management component
-│       │   └── condition/            # Specialized condition components
-│       │       ├── index.js          # Condition components barrel
-│       │       ├── ConditionRow.jsx  # Individual condition row
-│       │       ├── ConditionLabel.jsx # IF/AND labels
-│       │       ├── ConditionInputs.jsx # Input container
-│       │       ├── InputRenderer.jsx  # Input factory
-│       │       ├── InputWrapper.jsx   # Input wrapper
-│       │       ├── TextInput.jsx      # Text input component
-│       │       ├── SelectInput.jsx    # Select input component
-│       │       └── SpecializedSelects.jsx # Specialized selects
-│       ├── context/
-│       │   └── RuleBuilderContext.jsx # React Context provider
-│       └── hooks/
-│           └── useRuleBuilderState.js # Centralized state management
+│       └── components/
+│           ├── RuleBuilderApp.jsx    # Main rule builder component (React Final Form)
+│           ├── Group.jsx             # Group container component
+│           ├── Condition.jsx         # Condition management component
+│           └── condition/            # Specialized condition components
+│               ├── index.js          # Condition components barrel
+│               ├── ConditionRow.jsx  # Individual condition row
+│               ├── ConditionLabel.jsx # IF/AND labels
+│               ├── ConditionInputs.jsx # Input container
+│               ├── InputRenderer.jsx  # Input factory
+│               ├── InputWrapper.jsx   # Input wrapper
+│               ├── TextInput.jsx      # Text input component (React Final Form Field)
+│               ├── SelectInput.jsx    # Select input component
+│               └── SpecializedSelects.jsx # Specialized selects (React Final Form Fields)
 └── utils/
     └── constants.js                   # Payment-related constants
 ```
 
 ## Data Flow
 
-1. **State Management**: Centralized in `useRuleBuilderState` hook
-2. **Context Distribution**: Shared via `RuleBuilderContext`
-3. **Component Hierarchy**: App → Group → Condition → ConditionRow → Input Components
-4. **Event Flow**: User interactions → Context methods → State updates → Re-render
+1. **Form State Management**: React Final Form manages all form state internally
+2. **Component Hierarchy**: App → Group → Condition → ConditionRow → Input Components
+3. **Event Flow**: User interactions → React Final Form Field updates → Automatic re-render
+4. **State Updates**: Direct form manipulation via `form.change()` for programmatic updates
+5. **Field Integration**: All inputs use React Final Form Field components with proper field names
 
 ## Payment Domain Knowledge
 
@@ -115,8 +113,10 @@ The application is specifically designed for payment processing rules with suppo
 
 ## Development Patterns
 
-- **Immutable State Updates**: All state changes create new objects
-- **Prop Drilling Avoidance**: Context-based state sharing
-- **Component Composition**: Modular, reusable components
+- **Form-Based State Management**: React Final Form handles all state internally
+- **Field-Based Updates**: Individual form fields update automatically via React Final Form
+- **Component Composition**: Modular, reusable components with clear responsibilities
 - **Type Safety**: Consistent data structures throughout
-- **Separation of Concerns**: Clear boundaries between UI and logic
+- **Separation of Concerns**: Clear boundaries between UI and form logic
+- **Programmatic Form Control**: Direct form manipulation via `form.change()` for complex operations
+- **Array Field Management**: Proper handling of nested arrays (groups/conditions) in form state

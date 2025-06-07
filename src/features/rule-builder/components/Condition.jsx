@@ -1,16 +1,20 @@
 import { IoAdd } from "react-icons/io5";
 import { ConditionRow } from "./condition/ConditionRow";
-import { useRuleBuilderContext } from "../context/RuleBuilderContext";
 import {
   allKeyTypes,
   allOperators,
   allVariantValues,
   inputSequence,
+  allKeys,
 } from "../../../utils/constants";
 
-export const Condition = ({ groupId }) => {
-  const { getGroupConditions, addCondition, removeCondition, updateCondition } =
-    useRuleBuilderContext();
+export const Condition = ({ groupId, groupIndex, form, values }) => {
+  // Get conditions for the current group
+  const getGroupConditions = (groupId) => {
+    const groups = values.groups || [];
+    const group = groups.find((g) => g.id === groupId);
+    return group ? group.conditions : [];
+  };
 
   const conditions = getGroupConditions(groupId);
 
@@ -32,21 +36,58 @@ export const Condition = ({ groupId }) => {
   };
 
   const handleAddCondition = () => {
-    addCondition(groupId);
+    const groups = values.groups || [];
+    const groupIndex = groups.findIndex((g) => g.id === groupId);
+
+    if (groupIndex !== -1) {
+      const group = groups[groupIndex];
+      const newConditionId = Math.max(...group.conditions.map((c) => c.id)) + 1;
+      const newCondition = {
+        id: newConditionId,
+        paymentCriteria: allKeys[0],
+        criteriaValue: "",
+        comparisonOperator: "",
+        metadataKey: "",
+        metadataValue: "",
+      };
+
+      const updatedGroups = [...groups];
+      updatedGroups[groupIndex] = {
+        ...group,
+        conditions: [...group.conditions, newCondition],
+      };
+
+      form.change("groups", updatedGroups);
+      form.change("metadata.updatedAt", new Date().toISOString());
+    }
   };
 
   const handleRemoveCondition = (conditionId) => {
-    removeCondition(groupId, conditionId);
-  };
+    const groups = values.groups || [];
+    const groupIndex = groups.findIndex((g) => g.id === groupId);
 
-  const handleUpdateCondition = (conditionId, field, value) => {
-    updateCondition(groupId, conditionId, field, value);
+    if (groupIndex !== -1) {
+      const group = groups[groupIndex];
+      if (group.conditions.length > 1) {
+        const updatedConditions = group.conditions.filter(
+          (c) => c.id !== conditionId,
+        );
+        const updatedGroups = [...groups];
+        updatedGroups[groupIndex] = {
+          ...group,
+          conditions: updatedConditions,
+        };
+
+        form.change("groups", updatedGroups);
+        form.change("metadata.updatedAt", new Date().toISOString());
+      }
+    }
   };
 
   return (
     <div className="flex w-full flex-col gap-4">
       <div className="flex flex-col gap-4">
-        {conditions.map((condition, index) => {
+        {conditions.map((condition, conditionIndex) => {
           const {
             selectedKeyType,
             operators,
@@ -58,14 +99,15 @@ export const Condition = ({ groupId }) => {
             <ConditionRow
               key={condition.id}
               condition={condition}
-              updateCondition={handleUpdateCondition}
               removeCondition={handleRemoveCondition}
               showRemoveButton={conditions.length > 1}
-              isFirst={index === 0}
+              isFirst={conditionIndex === 0}
               operators={operators}
               valuesForSelectedKey={valuesForSelectedKey}
               inputSequenceValue={inputSequenceValue}
               selectedKeyType={selectedKeyType}
+              groupIndex={groupIndex}
+              conditionIndex={conditionIndex}
             />
           );
         })}

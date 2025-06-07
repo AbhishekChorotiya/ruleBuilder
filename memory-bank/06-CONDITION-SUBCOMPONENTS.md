@@ -15,50 +15,32 @@ Collection of specialized components that handle the detailed UI and logic for i
 **Key Responsibilities**:
 
 1. **Layout Management**: Arranges label, inputs, and remove button
-2. **Event Coordination**: Handles all input changes and delegates to parent
+2. **Props Delegation**: Passes props to child components for React Final Form integration
 3. **Conditional Rendering**: Shows AND label or condition label based on position
-4. **State Updates**: Maps input events to appropriate condition field updates
+4. **Component Composition**: Composes ConditionLabel, ConditionInputs, and remove button
 
 **Props Interface**:
 
 ```javascript
 {
   condition: object,              // Complete condition data
-  updateCondition: function,      // Update callback
   removeCondition: function,      // Remove callback
   showRemoveButton: boolean,      // Remove button visibility
   isFirst: boolean,              // First condition in group flag
   operators: array,              // Available operators for this condition
   valuesForSelectedKey: array,   // Enum values for selected key
-  inputSequenceValue: array      // UI flow sequence
+  inputSequenceValue: array,     // UI flow sequence
+  selectedKeyType: string,       // Type of the selected key
+  groupIndex: number,            // Group array index
+  conditionIndex: number         // Condition array index
 }
 ```
 
-**Event Handling Logic**:
+**Component Structure**:
 
-```javascript
-const handleKeyChange = (e) => {
-  const { name, value } = e.target;
-
-  switch (name) {
-    case "key-item":
-      updateCondition(condition.id, "selectedKey", value);
-      break;
-    case "operator":
-      updateCondition(condition.id, "selectedOperator", value);
-      break;
-    case "select-value":
-      updateCondition(condition.id, "selectedValue", value);
-      break;
-    case "key-input":
-      updateCondition(condition.id, "keyInput", value);
-      break;
-    case "value-input":
-      updateCondition(condition.id, "valueInput", value);
-      break;
-  }
-};
-```
+- **ConditionLabel**: Displays IF/AND labels based on position
+- **ConditionInputs**: Container for all input components
+- **Remove Button**: Conditional remove button with proper event handling
 
 **Layout Structure**:
 
@@ -68,19 +50,13 @@ const handleKeyChange = (e) => {
 
 ### InputRenderer.jsx - Dynamic Input Factory
 
-**Purpose**: Factory component that renders the appropriate input component based on input type.
+**Purpose**: Factory component that renders the appropriate input component based on input type with React Final Form Field integration.
 
-**Component Mapping**:
+**Key Features**:
 
-```javascript
-const inputComponents = {
-  "key-item": <SelectKeyItem />, // Payment key selection
-  operator: <SelectOperator />, // Comparison operator selection
-  "select-value": <SelectValue />, // Enum value selection
-  "value-input": <TextInput />, // Free text input
-  "key-input": <TextInput />, // Metadata key input
-};
-```
+- **Field Name Generation**: Creates proper field names using array indices for React Final Form
+- **Component Mapping**: Maps input types to appropriate React Final Form Field components
+- **Type-aware Rendering**: Selects correct input component based on selectedKeyType
 
 **Props Interface**:
 
@@ -90,12 +66,56 @@ const inputComponents = {
   allKeys: array,                // Available payment keys
   operators: array,              // Available operators
   valuesForSelectedKey: array,   // Enum values for dropdowns
-  handleKeyChange: function,     // Event handler
-  condition: object              // Current condition data
+  groupIndex: number,            // Group array index
+  conditionIndex: number,        // Condition array index
+  selectedKeyType: string        // Type of the selected key
 }
 ```
 
-**Design Pattern**: Factory pattern for dynamic component selection based on input type.
+**Field Name Generation**:
+
+```javascript
+const getFieldName = (field) => {
+  return `groups[${groupIndex}].conditions[${conditionIndex}].${field}`;
+};
+```
+
+**Component Mapping**:
+
+```javascript
+const inputComponents = {
+  "key-item": (
+    <SelectKeyItem
+      allKeys={allKeys}
+      fieldName={getFieldName("paymentCriteria")}
+    />
+  ),
+  operator: (
+    <SelectOperator
+      operators={operators}
+      fieldName={getFieldName("comparisonOperator")}
+    />
+  ),
+  "select-value": (
+    <SelectValue
+      valuesForSelectedKey={valuesForSelectedKey}
+      fieldName={getFieldName("criteriaValue")}
+    />
+  ),
+  "value-input": (
+    <TextInput
+      fieldName={
+        selectedKeyType === "metadata_value"
+          ? getFieldName("metadataValue")
+          : getFieldName("criteriaValue")
+      }
+    />
+  ),
+  "key-input": <TextInput fieldName={getFieldName("metadataKey")} />,
+};
+```
+
+**Design Pattern**: Factory pattern with React Final Form Field integration for dynamic component selection.
 
 ### ConditionInputs.jsx - Input Container
 
@@ -142,36 +162,82 @@ const inputComponents = {
 
 #### SpecializedSelects.jsx - Dropdown Components
 
-Contains three specialized select components:
+Contains three specialized select components using React Final Form Field:
 
 **SelectKeyItem**:
 
-- **Purpose**: Dropdown for selecting payment criteria keys
+- **Purpose**: Dropdown for selecting payment criteria keys using React Final Form Field
 - **Data Source**: `allKeys` array from constants
+- **Props**: `allKeys` array and `fieldName` for Field integration
+- **Implementation**: Uses `<Field name={fieldName}>` with render prop pattern
 - **Styling**: Consistent select styling with payment-specific options
 
 **SelectOperator**:
 
-- **Purpose**: Dropdown for selecting comparison operators
+- **Purpose**: Dropdown for selecting comparison operators using React Final Form Field
 - **Data Source**: `operators` array (filtered by key type)
+- **Props**: `operators` array and `fieldName` for Field integration
+- **Implementation**: Uses `<Field name={fieldName}>` with render prop pattern
 - **Dynamic Options**: Changes based on selected key's data type
 
 **SelectValue**:
 
-- **Purpose**: Dropdown for selecting enum values
+- **Purpose**: Dropdown for selecting enum values using React Final Form Field
 - **Data Source**: `valuesForSelectedKey` array
+- **Props**: `valuesForSelectedKey` array and `fieldName` for Field integration
+- **Implementation**: Uses `<Field name={fieldName}>` with render prop pattern
 - **Conditional Rendering**: Only shown for enum_variant types
+
+**Common Field Pattern**:
+
+```javascript
+<Field name={fieldName}>
+  {({ input }) => (
+    <select
+      {...input}
+      className="rounded border border-gray-300 bg-white px-3 py-2 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+    >
+      {/* Options rendered here */}
+    </select>
+  )}
+</Field>
+```
 
 #### TextInput.jsx - Text Input Component
 
-**Purpose**: Reusable text input for free-form values.
+**Purpose**: Reusable text input for free-form values using React Final Form Field.
+
+**Props Interface**:
+
+```javascript
+{
+  fieldName: string,           // Field name for React Final Form
+  placeholder: string          // Placeholder text (optional)
+}
+```
+
+**Implementation**:
+
+```javascript
+<Field name={fieldName}>
+  {({ input }) => (
+    <input
+      {...input}
+      type="text"
+      placeholder={placeholder}
+      className="rounded border border-gray-300 px-3 py-2 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+    />
+  )}
+</Field>
+```
 
 **Features**:
 
-- **Type Support**: Handles different input types (text, number)
+- **React Final Form Integration**: Uses Field component with render prop pattern
+- **Automatic State Management**: Form state handled by React Final Form
 - **Placeholder Support**: Dynamic placeholder text
-- **Event Handling**: Standardized onChange handling
-- **Styling**: Consistent input styling across the application
+- **Consistent Styling**: Uniform input styling across the application
+- **Focus States**: Proper focus and validation styling
 
 #### InputWrapper.jsx - Input Container
 
@@ -194,11 +260,11 @@ Contains three specialized select components:
 
 ### State Update Flow
 
-1. **User Input** → Input component onChange
-2. **Event Handling** → `handleKeyChange` in ConditionRow
-3. **Field Mapping** → Switch statement maps to condition field
-4. **State Update** → `updateCondition` called with field and value
-5. **Re-render** → Components re-render with new data
+1. **User Input** → React Final Form Field component onChange
+2. **Automatic State Update** → React Final Form automatically updates form state
+3. **Field Path** → Updates specific field using array notation (e.g., `groups[0].conditions[0].paymentCriteria`)
+4. **Form Re-render** → Form components re-render with new values
+5. **UI Update** → Visual changes reflect new form state
 
 ### Data Transformation Flow
 

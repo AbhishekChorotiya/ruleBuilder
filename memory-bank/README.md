@@ -95,6 +95,26 @@ This memory bank contains comprehensive context files for AI systems to understa
 - Pitfalls to avoid and quality standards
 - **Use when**: Starting AI-assisted development or need guidance on project patterns
 
+### 📝 [08-REACT-FINAL-FORM-REFACTOR.md](./08-REACT-FINAL-FORM-REFACTOR.md)
+
+**React Final Form migration documentation**
+
+- Complete refactor from useState to React Final Form
+- Form-based state management implementation
+- Benefits and architectural improvements
+- Migration notes and testing results
+- **Use when**: Understanding the form-based architecture or making form-related changes
+
+### ✅ [09-CURRENT-ARCHITECTURE-STATUS.md](./09-CURRENT-ARCHITECTURE-STATUS.md)
+
+**Current architecture status and verification**
+
+- Complete status of React Final Form refactor
+- Verification checklist and functionality confirmation
+- File status (active vs obsolete)
+- Development guidelines for current architecture
+- **Use when**: Getting current project status or verifying refactor completion
+
 ## Quick Reference
 
 ### For New AI Systems
@@ -139,16 +159,16 @@ This memory bank contains comprehensive context files for AI systems to understa
 
 ### Architecture Patterns
 
-- **React Context + Custom Hooks**: Centralized state management
-- **Component Composition**: Modular, reusable components
+- **React Final Form**: Form-based state management with automatic updates
+- **Component Composition**: Modular, reusable components with clear responsibilities
 - **Type-Driven UI**: Input components determined by data types
-- **Event Delegation**: Centralized event handling
-- **Immutable State**: All state changes create new objects
+- **Field-Based Updates**: Individual form fields update automatically
+- **Programmatic Form Control**: Direct form manipulation via `form.change()`
 
 ### Data Flow
 
 ```
-User Input → Component Event → Context Method → State Update → Re-render → UI Update
+User Input → React Final Form Field → Automatic State Update → Re-render → UI Update
 ```
 
 ### Component Hierarchy

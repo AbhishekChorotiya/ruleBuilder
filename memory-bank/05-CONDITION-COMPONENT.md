@@ -17,31 +17,35 @@ Main condition management component that handles the logic for rendering and man
 
 ```javascript
 {
-  groupId: number; // Unique identifier for the parent group
+  groupId: number,    // Unique identifier for the parent group
+  groupIndex: number, // Array index for the group
+  form: object,       // React Final Form instance
+  values: object      // Current form values
 }
 ```
 
 ## Dependencies
 
 ```javascript
-import { ConditionRow } from "./condition/index";
-import { useRuleBuilderContext } from "../context/RuleBuilderContext";
+import { IoAdd } from "react-icons/io5";
+import { ConditionRow } from "./condition/ConditionRow";
 import {
   allKeyTypes,
   allOperators,
   allVariantValues,
   inputSequence,
-} from "../utils/constants";
+  allKeys,
+} from "../../../utils/constants";
 ```
 
 ## State Integration
 
-Uses `useRuleBuilderContext` to access:
+Uses React Final Form integration:
 
-- `getGroupConditions(groupId)`: Retrieve conditions for the group
-- `addCondition(groupId)`: Add new condition to the group
-- `removeCondition(groupId, conditionId)`: Remove condition from group
-- `updateCondition(groupId, conditionId, field, value)`: Update condition field
+- `form.change()`: Update form values programmatically
+- `values.groups`: Access current groups array from form state
+- Direct array manipulation for CRUD operations
+- Automatic timestamp updates via `form.change("metadata.updatedAt")`
 
 ## Core Logic
 
@@ -72,15 +76,52 @@ const getConditionData = (condition) => {
 
 ```javascript
 const handleAddCondition = () => {
-  addCondition(groupId);
+  const groups = values.groups || [];
+  const groupIndex = groups.findIndex((g) => g.id === groupId);
+
+  if (groupIndex !== -1) {
+    const group = groups[groupIndex];
+    const newConditionId = Math.max(...group.conditions.map((c) => c.id)) + 1;
+    const newCondition = {
+      id: newConditionId,
+      paymentCriteria: allKeys[0],
+      criteriaValue: "",
+      comparisonOperator: "",
+      metadataKey: "",
+      metadataValue: "",
+    };
+
+    const updatedGroups = [...groups];
+    updatedGroups[groupIndex] = {
+      ...group,
+      conditions: [...group.conditions, newCondition],
+    };
+
+    form.change("groups", updatedGroups);
+    form.change("metadata.updatedAt", new Date().toISOString());
+  }
 };
 
 const handleRemoveCondition = (conditionId) => {
-  removeCondition(groupId, conditionId);
-};
+  const groups = values.groups || [];
+  const groupIndex = groups.findIndex((g) => g.id === groupId);
 
-const handleUpdateCondition = (conditionId, field, value) => {
-  updateCondition(groupId, conditionId, field, value);
+  if (groupIndex !== -1) {
+    const group = groups[groupIndex];
+    if (group.conditions.length > 1) {
+      const updatedConditions = group.conditions.filter(
+        (c) => c.id !== conditionId,
+      );
+      const updatedGroups = [...groups];
+      updatedGroups[groupIndex] = {
+        ...group,
+        conditions: updatedConditions,
+      };
+
+      form.change("groups", updatedGroups);
+      form.change("metadata.updatedAt", new Date().toISOString());
+    }
+  }
 };
 ```
 

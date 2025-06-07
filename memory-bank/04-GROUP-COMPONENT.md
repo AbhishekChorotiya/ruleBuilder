@@ -18,9 +18,12 @@ Container component that represents a logical group of conditions in the rule bu
 ```javascript
 {
   groupId: number,           // Unique identifier for the group
+  groupIndex: number,        // Array index for the group
   groupNumber: number,       // Display number (1-based index)
   onRemove: function,        // Callback function for group removal
-  showRemoveButton: boolean  // Whether to show the remove button
+  showRemoveButton: boolean, // Whether to show the remove button
+  form: object,             // React Final Form instance
+  values: object            // Current form values
 }
 ```
 
@@ -87,7 +90,8 @@ const handleRemove = () => {
 
 ### Child Component (Condition.jsx)
 
-- **Single Prop**: Passes only `groupId` to Condition component
+- **Multiple Props**: Passes `groupId`, `groupIndex`, `form`, `values` to Condition component
+- **Form Integration**: Passes React Final Form instance and values
 - **Delegation**: All condition logic handled by child component
 - **Isolation**: Group doesn't manage condition-specific logic
 
@@ -95,7 +99,8 @@ const handleRemove = () => {
 
 - **No Direct State**: Component is purely presentational
 - **Props-driven**: All data comes from parent via props
-- **Event Delegation**: Removal logic handled by parent's context methods
+- **Form Integration**: Passes React Final Form instance to child components
+- **Event Delegation**: Removal logic handled by parent's form methods
 
 ## Business Logic
 
