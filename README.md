@@ -17,7 +17,7 @@ A React-based rule builder application for creating complex conditional rules fo
 - **Build Tool**: Vite 6.3.5
 - **Styling**: TailwindCSS 4.1.8
 - **Icons**: React Icons 5.5.0
-- **State Management**: Simplified component state with React hooks
+- **State Management**: React Final Form 7.0.0 + Final Form 5.0.0
 - **Code Quality**: ESLint + Prettier
 
 ## 📦 Installation
@@ -112,9 +112,10 @@ RuleBuilderApp
 
 ### State Management
 
-- **Component State**: Local state management using React's useState
-- **Props Drilling**: State passed down through component hierarchy
-- **Immutability**: All state updates create new objects
+- **React Final Form**: Form-based state management with automatic updates
+- **Field Components**: All inputs use React Final Form Field components
+- **Programmatic Control**: Direct form manipulation via `form.change()`
+- **Automatic Updates**: Form state updates automatically trigger re-renders
 - **Real-time**: Automatic metadata updates on changes
 
 ### File Structure
@@ -207,7 +208,8 @@ This is a private project. For internal contributions:
 Additional documentation is available in the `memory-bank/` directory:
 
 - **00-PROJECT-OVERVIEW.md**: Complete project overview and architecture
-- **01-RULEBUILDER-APP-COMPONENT.md**: Main application component documentation
+- **01-APP-COMPONENT.md**: Simple App.jsx wrapper component documentation
+- **01-RULEBUILDER-APP-COMPONENT.md**: Main rule builder application component documentation
 - **04-GROUP-COMPONENT.md**: Group component structure and functionality
 - **05-CONDITION-COMPONENT.md**: Condition component architecture
 - **06-CONDITION-SUBCOMPONENTS.md**: Detailed condition sub-component docs
@@ -217,10 +219,12 @@ Additional documentation is available in the `memory-bank/` directory:
 
 ## 🔄 Recent Changes
 
-### Architecture Refactor (Latest)
+### React Final Form Refactor (Latest)
 
-- **Simplified State Management**: Removed React Context in favor of component-level state
-- **Feature-Based Organization**: Moved all components to `src/features/rule-builder/`
-- **Improved Modularity**: Better separation of concerns with dedicated condition sub-components
-- **Documentation Updates**: Comprehensive documentation in memory-bank
-- **Cleaner Dependencies**: Removed unused context and hook files
+- **React Final Form Integration**: Complete migration from React Context to React Final Form
+- **Form-Based State Management**: All state now managed through React Final Form
+- **Field Components**: All inputs converted to React Final Form Field components
+- **Programmatic Control**: Added `form.change()` for direct form manipulation
+- **Feature-Based Organization**: Maintained clean `src/features/rule-builder/` structure
+- **Documentation Updates**: Updated memory bank to reflect React Final Form architecture
+- **Cleaner Dependencies**: Added react-final-form and final-form packages

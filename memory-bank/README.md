@@ -35,16 +35,6 @@ This memory bank contains comprehensive context files for AI systems to understa
 - React Icons integration and modern UI
 - **Use when**: Modifying the main rule builder interface or adding global features
 
-### 🔄 [02-STATE-MANAGEMENT.md](./02-STATE-MANAGEMENT.md)
-
-**Centralized state system architecture**
-
-- useRuleBuilderState hook details
-- React Context implementation
-- State structure and management functions
-- Data flow patterns and performance considerations
-- **Use when**: Working with state updates, adding new state fields, or debugging state issues
-
 ### ⚙️ [03-CONSTANTS-CONFIG.md](./03-CONSTANTS-CONFIG.md)
 
 **Domain knowledge and configuration**
@@ -128,7 +118,7 @@ This memory bank contains comprehensive context files for AI systems to understa
 #### Adding New Payment Methods
 
 - Primary: `03-CONSTANTS-CONFIG.md`
-- Secondary: `02-STATE-MANAGEMENT.md`, `06-CONDITION-SUBCOMPONENTS.md`
+- Secondary: `06-CONDITION-SUBCOMPONENTS.md`
 
 #### UI/Layout Changes
 
@@ -137,7 +127,7 @@ This memory bank contains comprehensive context files for AI systems to understa
 
 #### State Management Changes
 
-- Primary: `02-STATE-MANAGEMENT.md`
+- Primary: `01-RULEBUILDER-APP-COMPONENT.md` (React Final Form)
 - Secondary: `05-CONDITION-COMPONENT.md`, `07-AI-INTEGRATION-GUIDE.md`
 
 #### Component Development
@@ -153,7 +143,7 @@ This memory bank contains comprehensive context files for AI systems to understa
 #### Performance Optimization
 
 - Primary: `07-AI-INTEGRATION-GUIDE.md`
-- Secondary: `02-STATE-MANAGEMENT.md`, `06-CONDITION-SUBCOMPONENTS.md`
+- Secondary: `06-CONDITION-SUBCOMPONENTS.md`
 
 ## Key Concepts Summary
 

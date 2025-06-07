@@ -77,7 +77,7 @@ The Rule Builder project has been **completely refactored** to use React Final F
 
 ### ⚠️ Obsolete Memory Bank Files
 
-- `02-STATE-MANAGEMENT.md` - **OBSOLETE** (documents removed Context/Hooks architecture)
+- `02-STATE-MANAGEMENT.md` - **REMOVED** (documented removed Context/Hooks architecture)
 
 ## Verification Checklist
 

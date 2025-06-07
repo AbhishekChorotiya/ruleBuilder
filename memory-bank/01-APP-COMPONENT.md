@@ -40,92 +40,24 @@ export default App;
 ## Integration Points
 
 - **Feature Module**: Imports and renders RuleBuilderApp
-- **Provider Setup**: Context providers are set up in main.jsx
+- **Provider Setup**: No providers needed (React Final Form handles state internally)
 - **Routing**: Currently single-feature app, but ready for routing addition
 
-## Component Structure
+## Design Philosophy
 
-### Header Section
-
-- Blue header bar with "Rule Builder" title
-- Centered layout with padding
-
-### Groups Section
-
-- Maps through `ruleState.groups` to render Group components
-- Displays group operators (OR) between groups
-- Shows visual separation with styled operator badges
-
-### Add Group Button
-
-- Dashed border button for adding new groups
-- Always shows "OR" relationship context
-- Full-width layout for easy access
-
-### Auth Type Section
-
-- Gray background section for authentication settings
-- Dropdown select for auth type (any/all/none)
-- Clear labeling: "Auth Type is equal to"
-
-### Save Section
-
-- Blue save button with hover effects
-- Triggers `saveRule()` function
-- Logs complete rule state to console
-
-## UI/UX Features
-
-- **Responsive Design**: Flexbox layout adapts to screen sizes
-- **Visual Hierarchy**: Clear separation between sections
-- **Interactive Elements**: Hover states and visual feedback
-- **Accessibility**: Semantic HTML structure
-
-## Styling Classes (TailwindCSS)
-
-- Layout: `flex`, `h-screen`, `w-full`, `flex-col`
-- Spacing: `p-4`, `py-5`, `mt-5`
-- Colors: `bg-blue-100`, `bg-orange-100`, `bg-gray-100`
-- Borders: `border-dashed`, `border-orange-800`
-- Typography: `text-lg`, `font-semibold`
-
-## Data Flow
-
-1. **Initialization**: Receives state from RuleBuilderContext
-2. **Group Management**: Passes group data to Group components
-3. **User Actions**: Handles button clicks and form changes
-4. **State Updates**: Triggers context methods for state changes
-5. **Visual Updates**: Re-renders based on state changes
-
-## Integration Points
-
-- **Group Component**: Passes `groupId`, `groupNumber`, `onRemove`, `showRemoveButton`
-- **Context Methods**: Direct integration with state management functions
-- **Event Handling**: onClick and onChange handlers for user interactions
-
-## Business Logic
-
-- **Group Relationships**: Visual representation of OR logic between groups
-- **Minimum Groups**: Ensures at least one group exists (handled by Group component)
-- **Auth Type**: Final rule evaluation criteria
-- **Rule Persistence**: Save functionality with console logging
-
-## Error Handling
-
-- Relies on context error boundaries
-- Group removal validation handled in state management
-- No direct error handling in this component
-
-## Performance Considerations
-
-- **Efficient Rendering**: Uses React keys for group mapping
-- **State Optimization**: Minimal re-renders through context design
-- **Event Delegation**: Proper event handler binding
+- **Minimal Wrapper**: App.jsx contains no business logic
+- **Feature Isolation**: All rule builder functionality is contained in the feature module
+- **Scalability**: Easy to add new features alongside rule builder
+- **Maintainability**: Clear separation of concerns
 
 ## Future Enhancement Areas
 
-- Rule name/description input fields
-- Rule validation feedback
-- Export/import functionality
-- Rule templates
-- Undo/redo capabilities
+- **Routing**: Add React Router for multiple features
+- **Global Layout**: Add common header/footer if needed
+- **Error Boundaries**: Add global error handling
+- **Theme Provider**: Add global theming if required
+- **Authentication**: Add auth wrapper if needed
+
+## Notes
+
+This component intentionally contains minimal logic. All the complex UI elements (header, groups, conditions, etc.) are handled by the RuleBuilderApp component in the feature module. This maintains clean architecture and separation of concerns.
