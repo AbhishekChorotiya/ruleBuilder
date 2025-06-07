@@ -21,20 +21,6 @@ export const useRuleBuilderState = () => {
           },
         ],
       },
-      {
-        id: 2,
-        operator: "AND",
-        conditions: [
-          {
-            id: 1,
-            paymentCriteria: allKeys[0],
-            criteriaValue: "",
-            comparisonOperator: "",
-            metadataKey: "",
-            metadataValue: "",
-          },
-        ],
-      },
     ],
     betweenGroupsOperator: "OR", // OR between groups
     authenticationRequirement: "any",
