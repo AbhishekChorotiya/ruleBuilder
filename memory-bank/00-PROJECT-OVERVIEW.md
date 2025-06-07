@@ -80,7 +80,7 @@ src/
 │       │   └── condition/            # Specialized condition components
 │       │       ├── index.js          # Condition components barrel
 │       │       ├── ConditionRow.jsx  # Individual condition row
-│       │       ├── ConditionLabel.jsx # WHERE/AND labels
+│       │       ├── ConditionLabel.jsx # IF/AND labels
 │       │       ├── ConditionInputs.jsx # Input container
 │       │       ├── InputRenderer.jsx  # Input factory
 │       │       ├── InputWrapper.jsx   # Input wrapper

@@ -109,7 +109,7 @@ const inputComponents = {
 
 ### ConditionLabel.jsx - First Condition Label
 
-**Purpose**: Displays "Where" label for the first condition in a group.
+**Purpose**: Displays "IF" label for the first condition in a group.
 
 **Styling**: Consistent with AND badges but with different text and color scheme.
 
