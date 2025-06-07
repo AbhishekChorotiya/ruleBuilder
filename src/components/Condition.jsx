@@ -1,126 +1,75 @@
-import { useState } from "react";
+import { ConditionRow } from "./condition/index";
+import { useRuleBuilderContext } from "../context/RuleBuilderContext";
 import {
-  allKeys,
   allKeyTypes,
   allOperators,
   allVariantValues,
   inputSequence,
 } from "../utils/constants";
 
-const SelectKeyItem = ({ allKeys, handleKeyChange }) => {
-  return (
-    <div className="bg-white p-2">
-      <select name="key-item" onChange={handleKeyChange}>
-        {allKeys.map((key) => (
-          <option key={key} value={key}>
-            {key}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};
+// Main Condition component
+export const Condition = ({ groupId }) => {
+  const { getGroupConditions, addCondition, removeCondition, updateCondition } =
+    useRuleBuilderContext();
 
-const SelectOperator = ({ operators, handleKeyChange }) => {
-  return (
-    <div className="bg-white p-2">
-      <select name="operator" onChange={handleKeyChange}>
-        {operators.map((op) => (
-          <option key={op} value={op}>
-            {op}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};
+  const conditions = getGroupConditions(groupId);
 
-const SelectValue = ({ values, handleKeyChange }) => {
-  return (
-    <div className="bg-white p-2">
-      <select name="select-value" onChange={handleKeyChange}>
-        {values.map((value) => (
-          <option key={value} value={value}>
-            {value}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};
+  const getConditionData = (condition) => {
+    const selectedKeyType = allKeyTypes[condition.selectedKey];
+    const operators = allOperators[selectedKeyType] || [];
+    const valuesForSelectedKey =
+      selectedKeyType === "enum_variant"
+        ? allVariantValues[condition.selectedKey]
+        : [];
+    const inputSequenceValue = inputSequence[selectedKeyType] || [];
 
-export const Condition = () => {
-  const [selectedKey, setSelectedKey] = useState(allKeys[0]);
-  const selectedKeyType = allKeyTypes[selectedKey];
-  const operators = allOperators[selectedKeyType] || [];
-  const valuesForSelectedKey =
-    selectedKeyType == "enum_variant" ? allVariantValues[selectedKey] : [];
-  const inputSequenceValue = inputSequence[selectedKeyType] || [];
-  const [selectedValue, setSelectedValue] = useState("");
-  const [selectedOperator, setSelectedOperator] = useState("");
-  console.log("inputSequenceValue:", inputSequenceValue, selectedKeyType);
-  const handleKeyChange = (e) => {
-    if (e.target.name === "key-item") {
-      setSelectedKey(e.target.value);
-    }
-    if (e.target.name === "operator") {
-      setSelectedOperator(e.target.value);
-    }
-    if (e.target.name === "select-value") {
-      setSelectedValue(e.target.value);
-    }
-    console.log("Selected key:", e.target.value);
+    return {
+      selectedKeyType,
+      operators,
+      valuesForSelectedKey,
+      inputSequenceValue,
+    };
   };
+
+  const handleAddCondition = () => {
+    addCondition(groupId);
+  };
+
+  const handleRemoveCondition = (conditionId) => {
+    removeCondition(groupId, conditionId);
+  };
+
+  const handleUpdateCondition = (conditionId, field, value) => {
+    updateCondition(groupId, conditionId, field, value);
+  };
+
   return (
-    <div className="w-full flex-col gap-4">
-      <div className="flex min-h-16 w-full items-center gap-4">
-        <div>
-          <span className="flex items-center rounded-lg bg-green-100 p-2 px-4 font-semibold text-green-800">
-            IF
-          </span>
-        </div>
-        <div className="flex h-full w-full flex-wrap items-center gap-4 rounded-lg bg-gray-100 p-2 px-4">
-          {inputSequenceValue.map((inputType, index) => {
-            if (inputType === "key-item") {
-              return (
-                <SelectKeyItem
-                  allKeys={allKeys}
-                  handleKeyChange={handleKeyChange}
-                  key={index}
-                />
-              );
-            } else if (inputType === "operator") {
-              return (
-                <SelectOperator
-                  operators={operators}
-                  handleKeyChange={handleKeyChange}
-                  key={index}
-                />
-              );
-            } else if (inputType === "select-value") {
-              return (
-                <SelectValue
-                  values={valuesForSelectedKey}
-                  handleKeyChange={handleKeyChange}
-                  key={index}
-                />
-              );
-            } else if (inputType === "value-input") {
-              return (
-                <div key={index} className="bg-white p-2">
-                  <input type="text" inputType={inputType} />
-                </div>
-              );
-            } else if (inputType === "key-input") {
-              return (
-                <div key={index} className="bg-white p-2">
-                  <input type="text" inputType={inputType} />
-                </div>
-              );
-            }
-            return null;
-          })}
-        </div>
+    <div className="flex w-full flex-col gap-4">
+      {conditions.map((condition, index) => {
+        const { operators, valuesForSelectedKey, inputSequenceValue } =
+          getConditionData(condition);
+
+        return (
+          <ConditionRow
+            key={condition.id}
+            condition={condition}
+            updateCondition={handleUpdateCondition}
+            removeCondition={handleRemoveCondition}
+            showRemoveButton={conditions.length > 1}
+            isFirst={index === 0}
+            operators={operators}
+            valuesForSelectedKey={valuesForSelectedKey}
+            inputSequenceValue={inputSequenceValue}
+          />
+        );
+      })}
+      <div className="flex w-full items-center">
+        <button
+          onClick={handleAddCondition}
+          className="rounded-lg text-blue-500"
+        >
+          + Add Condition
+        </button>
       </div>
     </div>
   );
