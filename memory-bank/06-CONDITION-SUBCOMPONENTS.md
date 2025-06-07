@@ -62,7 +62,7 @@ const handleKeyChange = (e) => {
 
 **Layout Structure**:
 
-- **Label Section**: ConditionLabel (first) or AND badge (subsequent)
+- **Label Section**: ConditionLabel component with dynamic labelType prop
 - **Input Section**: ConditionInputs component with all input logic
 - **Action Section**: Remove button (when multiple conditions exist)
 
@@ -107,11 +107,36 @@ const inputComponents = {
 - **Input Wrapping**: Wraps each input in `InputWrapper` for consistent styling
 - **Sequence Management**: Controls the order and visibility of input components
 
-### ConditionLabel.jsx - First Condition Label
+### ConditionLabel.jsx - Dynamic Condition Label
 
-**Purpose**: Displays "IF" label for the first condition in a group.
+**Purpose**: Displays dynamic labels for conditions based on labelType prop. Supports both "IF" and "AND" labels with appropriate styling.
 
-**Styling**: Consistent with AND badges but with different text and color scheme.
+**Props Interface**:
+
+```javascript
+{
+  labelType: string; // Label type to display ("IF" or "AND"), defaults to "IF"
+}
+```
+
+**Key Features**:
+
+- **Dynamic Styling**: Uses `getStyleClasses` function to apply appropriate colors based on labelType
+- **Flexible Text**: Displays the labelType value dynamically
+- **Consistent Design**: Maintains uniform styling patterns across all label types
+- **Extensible**: Easy to add new label types by extending the styling function
+
+**Styling Logic**:
+
+- **"IF" Labels**: Green background (`bg-green-100 text-green-800`)
+- **"AND" Labels**: Orange background (`bg-orange-200 text-orange-800`)
+- **Default Fallback**: Green styling for unknown types
+
+**Usage in ConditionRow**:
+
+```javascript
+<ConditionLabel labelType={isFirst ? "IF" : "AND"} />
+```
 
 ### Input Components
 

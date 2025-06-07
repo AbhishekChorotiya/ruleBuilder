@@ -45,15 +45,7 @@ export const ConditionRow = ({
 
   return (
     <div className="flex min-h-16 w-full items-center gap-4">
-      {isFirst ? (
-        <ConditionLabel />
-      ) : (
-        <div className="flex items-center">
-          <span className="flex items-center rounded-lg bg-orange-200 px-4 py-2 font-semibold text-orange-800">
-            AND
-          </span>
-        </div>
-      )}
+      <ConditionLabel labelType={isFirst ? "IF" : "AND"} />
 
       <div className="flex-1">
         <ConditionInputs
